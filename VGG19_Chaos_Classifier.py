@@ -112,7 +112,7 @@ class_to_idx = {value:key for key,value in idx_to_class.items()}
 #######################################################
 #               Define Dataset Class
 #######################################################
-class LandmarkDataset(Dataset):
+class CovidImagesDataset(Dataset):
     def __init__(self, image_paths, transform=None):
         self.image_paths = image_paths
         self.transform = transforms.Compose([transforms.Resize(480),
@@ -126,7 +126,6 @@ class LandmarkDataset(Dataset):
         image_filepath = self.image_paths[idx]
         img = Image.open(image_filepath).convert('RGB')
         img = np.array(img)
-       # img = cv2.resize(img, (256, 256))
         img = Image.fromarray(img)
         if self.transform is not None:
             img = self.transform(img)
@@ -138,9 +137,9 @@ class LandmarkDataset(Dataset):
 #######################################################
 #                  Create Dataset
 #######################################################
-train_dataset = LandmarkDataset(train_image_paths)
-valid_dataset = LandmarkDataset(valid_image_paths)  # test transforms are applied
-test_dataset = LandmarkDataset(test_image_paths)
+train_dataset = CovidImagesDataset(train_image_paths)
+valid_dataset = CovidImagesDataset(valid_image_paths)  # test transforms are applied
+test_dataset = CovidImagesDataset(test_image_paths)
 
 print('The shape of tensor for 50th image in train dataset: ',train_dataset[49][0].shape)
 print('The label for 50th image in train dataset: ',train_dataset[49][1])
